@@ -1,6 +1,8 @@
 package com.javanauta.usuario.business;
 
 
+import com.javanauta.usuario.business.dto.UsuarioDto;
+import com.javanauta.usuario.business.dto.converter.UsuarioConverter;
 import com.javanauta.usuario.infrastructure.entity.Usuario;
 import com.javanauta.usuario.infrastructure.exceptions.ConflictException;
 import com.javanauta.usuario.infrastructure.repository.UsuarioRepository;
@@ -14,6 +16,14 @@ public class UsuarioService {
 
 
     private final UsuarioRepository usuarioRepository;
+    private final UsuarioConverter usuarioConverter;
+
+
+    public UsuarioDto salvarUsuario(UsuarioDto usuarioDto){
+        Usuario usuario =usuarioConverter.converter(usuarioDto);
+        usuario = usuarioRepository.save(usuario);
+        return usuarioConverter.converterDto(usuario);
+    }
 
     public Usuario salvarUsuario(Usuario usuario){
         try {
